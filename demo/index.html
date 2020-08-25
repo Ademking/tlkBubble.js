@@ -1,32 +1,24 @@
-<!doctype html>
-<html>
-  <head>
-    <title>tlkBubble.js Demo</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-      body {
-        padding: 0;
-        margin: 0;
-      }
-      h1 {
-        font-family: 'Noto Sans', sans-serif;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%)
-      }
-    </style>
-    <script src="https://cdn.jsdelivr.net/gh/ademking/tlkbubble.js@master/tlkbubble.min.js"></script>
-    <script>
-      chatbubble({
-        username: "Bob"
-      });
-    </script>
-  </head>
-  <body>
-    <p>tlkBubble.js Demo
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tlkBubble.js</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+    .main {
+      font-family: 'Noto Sans', sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <h1>tlkBubble.js - Demo</h1>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/Ademking/tlkBubble.js@master/tlkbubble.min.js"></script>
+  <script>
+    tlkBubble({username: "John"});
+  </script>
+</body>
 </html>
