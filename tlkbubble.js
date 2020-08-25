@@ -50,6 +50,7 @@ const tlkBubble = params => {
             background: ${bubbleColor};
     }
 
+
     .fab-options {
             list-style-type: none;
             margin: 0;
@@ -84,6 +85,7 @@ const tlkBubble = params => {
     }
   `);
   let iframeSrc = "";
+  let iframeStyleSrc = "https://cdn.jsdelivr.net/gh/Ademking/tlkbubble.css@latest/"
   if (params.username === undefined) iframeSrc = `//embed.tlk.io/test`;
   else {
     iframeSrc = `//embed.tlk.io/test?nickname=${params.username}`;
@@ -95,7 +97,8 @@ const tlkBubble = params => {
     </div>
     </div>
     <div id="chatroom-iframe-wrapper" class="noselect">
-      <iframe src="${iframeSrc}" style="width: 100%; height: 100%; margin-bottom: -8px" frameborder="0"></iframe>
+      <iframe data-custom-css="${iframeStyleSrc}"
+      id="chatroom-iframe" src="${iframeSrc}" style="width: 100%; height: 100%; margin-bottom: -8px" frameborder="0"></iframe>
     </div>`;
   node.onclick = () => {
     let w = document.getElementById("chatroom-iframe-wrapper").style.width;

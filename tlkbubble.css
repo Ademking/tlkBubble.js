@@ -1,0 +1,4 @@
+/* fix background color*/
+html.isIframe {
+    background-color: none !important
+}
