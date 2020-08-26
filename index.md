@@ -3,5 +3,5 @@ A tiny Javascript library to integrate tlk.io chat on any page of your website. 
 
 <script src="https://cdn.jsdelivr.net/gh/Ademking/tlkBubble.js@0.1.2/tlkbubble.js"></script>
 <script>
- tlkBubble({username: "John"});
+ tlkBubble({room: "test", username: "John"});
 </script>
