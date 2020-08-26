@@ -1,4 +1,4 @@
-/* tlkBubble 0.1.2 */
+/* tlkBubble 0.1.3 */
 const tlkBubble = params => {
 
   // Inject CSS to website Function
@@ -91,40 +91,18 @@ const tlkBubble = params => {
     }
   `);
 
-  // Select Theme by Name - default theme "day"
-  let selectThemeByName = (name) => {
-    let r = themes.find((theme, i) => {
-      if (theme.name === name) return theme;
-    });
-    if (!r) {
-      console.error("tlkBubble.js - Theme not found. Please check theme name");
-      return themes[0]
+  // Return the selected Theme - default theme "day"
+  let selectedTheme = () => {
+    let selectedTheme = params.theme || "day";
+    if (selectedTheme === "day") return "theme--day";
+    else if (selectedTheme === "pop") return "theme--pop";
+    else if (selectedTheme === "minimal") return "theme--minimal";
+    else if (selectedTheme === "night") return "theme--night";
+    else {
+      console.error("tlkBubble.js - Theme name not found! Please check your theme name. tlkBubble.js is using the default theme");
+      return "theme--day";
     }
-    return r;
   }
-
-  // List of Themes
-  let themes = [{
-      name: "day",
-      backgroundColor: "#f4f3f1",
-      textColor: "#000000",
-    },
-    {
-      name: "pop",
-      backgroundColor: "#8f3d43",
-      textColor: "#000000",
-    },
-    {
-      name: "minimal",
-      backgroundColor: "#ffffff",
-      textColor: "#4d4d4d",
-    },
-    {
-      name: "night",
-      backgroundColor: "#26282c",
-      textColor: "#000000",
-    },
-  ]
 
   // Iframe Custom CSS URL
   let iframeStyleSrc = params.customCss || "https://cdn.jsdelivr.net/gh/Ademking/tlkBubble.js@0.1.2/tlkbubble.css";
@@ -132,7 +110,7 @@ const tlkBubble = params => {
   // Return Username Param - Default: No Username
   let usernameURI = () => {
     if (params.username)
-      return `?nickname=${params.username}`;
+      return `&nickname=${params.username}`;
     else
       return "";
   }
@@ -146,8 +124,9 @@ const tlkBubble = params => {
       return "demo";
     }
   }
+  
   // Iframe Src
-  let iframeSrc = `//embed.tlk.io/${room()}${usernameURI()}&custom_css_path=${iframeStyleSrc}`;
+  let iframeSrc = `//embed.tlk.io/${room()}?custom_css_path=${iframeStyleSrc}${usernameURI()}&theme=${selectedTheme()}`;
 
   // HTML element to inject
   var node = document.createElement("div");
