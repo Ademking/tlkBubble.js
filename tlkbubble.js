@@ -1,4 +1,4 @@
-/* tlkBubble 0.1.3 */
+/* tlkBubble 0.1.4 */
 const tlkBubble = params => {
 
   // Inject CSS to website Function
