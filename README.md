@@ -4,7 +4,7 @@ A tiny Javascript library to integrate tlk.io chat on any page of your website. 
 ## Installation
 
 Add this script to the bottom of your page body
-```
+```html
 <script src="https://cdn.jsdelivr.net/gh/Ademking/tlkBubble.js@0.1.4/tlkbubble.min.js"></script>
 <script>
  tlkBubble({
