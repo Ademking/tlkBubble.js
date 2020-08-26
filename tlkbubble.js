@@ -1,14 +1,20 @@
+/* tlkBubble 0.1.2 */
 const tlkBubble = params => {
+
+  // Inject CSS to website Function
   const addStyle = (() => {
     const style = document.createElement("style");
     document.head.append(style);
     return styleString => (style.textContent = styleString);
   })();
-  const bubbleColor =
-    params.bubbleColor || `linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);`;
-  const icon =
-    params.icon ||
-    `<svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 512.012 512.012"><path d="M333.201 115.038c-28.905-59.021-89.37-98.042-157.193-98.042-97.047 0-176 78.505-176 175 0 26.224 5.63 51.359 16.742 74.794L.299 349.055c-2.094 10.472 7.144 19.728 17.618 17.656l83.279-16.465a172.546 172.546 0 0034.732 12.151c-26.717-126.541 69.199-245.321 197.273-247.359z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#FFF"/><path d="M495.266 394.79a174.485 174.485 0 007.511-18.514h-.549c37.448-109.917-41.305-225.441-157.567-231.066l-.005-.018c-100.036-4.61-183.148 75.486-183.148 174.804 0 96.414 78.361 174.857 174.743 174.997 26.143-.035 51.201-5.663 74.568-16.747 91.207 18.032 84.094 16.75 86.189 16.75 9.479 0 16.56-8.686 14.709-17.941z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#FFF"/></svg>`;
+
+  // Bubble btn color param
+  const bubbleColor = params.bubbleColor || `linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);`;
+
+  // Icon inside Bubble btn
+  const icon = params.icon || `<svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 512.012 512.012"><path d="M333.201 115.038c-28.905-59.021-89.37-98.042-157.193-98.042-97.047 0-176 78.505-176 175 0 26.224 5.63 51.359 16.742 74.794L.299 349.055c-2.094 10.472 7.144 19.728 17.618 17.656l83.279-16.465a172.546 172.546 0 0034.732 12.151c-26.717-126.541 69.199-245.321 197.273-247.359z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#FFF"/><path d="M495.266 394.79a174.485 174.485 0 007.511-18.514h-.549c37.448-109.917-41.305-225.441-157.567-231.066l-.005-.018c-100.036-4.61-183.148 75.486-183.148 174.804 0 96.414 78.361 174.857 174.743 174.997 26.143-.035 51.201-5.663 74.568-16.747 91.207 18.032 84.094 16.75 86.189 16.75 9.479 0 16.56-8.686 14.709-17.941z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#FFF"/></svg>`;
+
+  // Inject CSS
   addStyle(`
     .btn-bubble {
       position: fixed;
@@ -84,12 +90,66 @@ const tlkBubble = params => {
             overflow: hidden;
     }
   `);
-  let iframeSrc = "";
-  let iframeStyleSrc = "https://cdn.jsdelivr.net/gh/Ademking/tlkbubble.css@latest/"
-  if (params.username === undefined) iframeSrc = `//embed.tlk.io/test`;
-  else {
-    iframeSrc = `//embed.tlk.io/test?nickname=${params.username}`;
+
+  // Select Theme by Name - default theme "day"
+  let selectThemeByName = (name) => {
+    let r = themes.find((theme, i) => {
+      if (theme.name === name) return theme;
+    });
+    if (!r) {
+      console.error("tlkBubble.js - Theme not found. Please check theme name");
+      return themes[0]
+    }
+    return r;
   }
+
+  // List of Themes
+  let themes = [{
+      name: "day",
+      backgroundColor: "#f4f3f1",
+      textColor: "#000000",
+    },
+    {
+      name: "pop",
+      backgroundColor: "#8f3d43",
+      textColor: "#000000",
+    },
+    {
+      name: "minimal",
+      backgroundColor: "#ffffff",
+      textColor: "#4d4d4d",
+    },
+    {
+      name: "night",
+      backgroundColor: "#26282c",
+      textColor: "#000000",
+    },
+  ]
+
+  // Iframe Custom CSS URL
+  let iframeStyleSrc = params.customCss || "https://cdn.jsdelivr.net/gh/Ademking/tlkBubble.js@0.1.2/tlkbubble.css";
+
+  // Return Username Param - Default: No Username
+  let usernameURI = () => {
+    if (params.username)
+      return `?nickname=${params.username}`;
+    else
+      return "";
+  }
+
+  // Return Room Id - Default : demo
+  let room = () => {
+    if (params.room) {
+      return params.room;
+    } else {
+      console.error("tlkBubble.js - Room name is missing. Please check your room");
+      return "demo";
+    }
+  }
+  // Iframe Src
+  let iframeSrc = `//embed.tlk.io/${room()}${usernameURI()}&custom_css_path=${iframeStyleSrc}`;
+
+  // HTML element to inject
   var node = document.createElement("div");
   node.innerHTML = `<div id="bubble-btn" class="btn-bubble">
     <div class="fab fab-icon-holder">
@@ -97,9 +157,15 @@ const tlkBubble = params => {
     </div>
     </div>
     <div id="chatroom-iframe-wrapper" class="noselect">
-      <iframe data-custom-css="${iframeStyleSrc}"
-      id="chatroom-iframe" src="${iframeSrc}" style="width: 100%; height: 100%; margin-bottom: -8px" frameborder="0"></iframe>
+      <iframe 
+      id="chatroom-iframe" 
+      src="${iframeSrc}" 
+      style="width: 100%; 
+      height: 100%; margin-bottom: -8px" 
+      frameborder="0"></iframe>
     </div>`;
+
+  // OnClick event: Show/Hide Chatroom
   node.onclick = () => {
     let w = document.getElementById("chatroom-iframe-wrapper").style.width;
     if (w === "0px" || w === "") {

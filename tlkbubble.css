@@ -1,4 +1,20 @@
-/* fix background color*/
-html.isIframe {
-    background-color: none !important
+/* tlkBubble.js -  fix themes */
+.theme--day {
+    background-color: #f4f3f1 !important;
+    color           : #000000 !important;
+}
+
+.theme--pop {
+    background-color: #8f3d43 !important;
+    color           : #000000 !important;
+}
+
+.theme--minimal {
+    background-color: #ffffff !important;
+    color           : #4d4d4d !important;
+}
+
+.theme--night {
+    background-color: #26282c !important;
+    color           : #000000 !important;
 }
